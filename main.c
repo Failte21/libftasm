@@ -24,6 +24,24 @@ int test_bzero()
 		i--;
 	}
 	printf("OK\n");
+	free(a);
+	free(b);
+	return (0);
+}
+
+int test_strcat()
+{
+	char	*a;
+	char	*b;
+	int		i;
+	
+	i = 10;
+	a = (char *)malloc(i);
+	b = (char *)malloc(i);
+	memset(a, 'a', 3);
+	memset(b, 'b', 3);
+	ft_strcat(a,b);
+	printf("%s\n", a);
 	return (0);
 }
 
@@ -32,6 +50,7 @@ int main()
 	int	err;
 
 	err = 0;
-	err += test_bzero();
+	// err += test_bzero();
+	err += test_strcat();
 	return (err);
 }

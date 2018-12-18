@@ -4,6 +4,7 @@ AS = nasm
 OBJS = $(SRCS:.s=.o)
 
 SRCS = ft_bzero.s
+SRCS += ft_strcat.s
 
 all: $(NAME)
 
@@ -11,7 +12,7 @@ $(NAME): $(OBJS)
 	@ar -r $@ $^
 	@ranlib $@
 
-$(OBJS): $(SRCS)
+%.o: %.s
 	$(AS) -f macho64 $^ -o $@
 
 clean:
