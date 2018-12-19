@@ -45,12 +45,24 @@ int test_strcat()
 	return (0);
 }
 
+int test_strlen()
+{
+	int	a;
+	int b;
+
+	a = strlen("Hello world");
+	b = ft_strlen("Hello world");
+	printf("real: %d, mine: %d\n", a, b);
+	return (0);
+}
+
 int main()
 {
 	int	err;
 
 	err = 0;
 	// err += test_bzero();
-	err += test_strcat();
+	// err += test_strcat();
+	err += test_strlen();
 	return (err);
 }
