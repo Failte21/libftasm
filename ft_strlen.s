@@ -2,6 +2,10 @@ section .text
     global _ft_strlen
 
 _ft_strlen:
+
+init:
+	push rbp
+	mov rbp, rsp
     mov eax, 0
 
 lp:
@@ -12,4 +16,5 @@ lp:
     jmp lp
 
 end:
+	leave
     ret
