@@ -6,10 +6,13 @@ int test_bzero()
 	char	*a;
 	char	*b;
 	int		i;
+	int		n_tests;
 
-	i = 500;
+	n_tests = 500;
+	i = n_tests;
 	a = (char *)malloc(i);
 	b = (char *)malloc(i);
+	printf("-----------BZERO----------\n");
 	while (i > 0)
 	{
 		memset(a, 'a', i);
@@ -23,7 +26,7 @@ int test_bzero()
 		}
 		i--;
 	}
-	printf("OK\n");
+	printf("OK on %d tests\n", n_tests);
 	free(a);
 	free(b);
 	return (0);
@@ -52,6 +55,7 @@ int test_strlen()
 
 	a = strlen("Hello world");
 	b = ft_strlen("Hello world");
+	printf("-----------STRLEN----------\n");
 	printf("real: %d, mine: %d\n", a, b);
 	return (0);
 }
@@ -61,7 +65,7 @@ int main()
 	int	err;
 
 	err = 0;
-	// err += test_bzero();
+	err += test_bzero();
 	// err += test_strcat();
 	err += test_strlen();
 	return (err);
