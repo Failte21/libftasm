@@ -4,8 +4,6 @@
 
 extern _ft_strlen
 
-extern _putchar
-
 section .data
 	newline db 0x0a
 
