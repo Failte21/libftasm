@@ -6,6 +6,7 @@ OBJS = $(SRCS:.s=.o)
 SRCS = ft_bzero.s
 SRCS += ft_strcat.s
 SRCS += ft_strlen.s
+SRCS += ft_puts.s
 
 all: $(NAME)
 
