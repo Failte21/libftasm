@@ -10,6 +10,7 @@ SRCS += ft_puts.s
 SRCS += ft_islower.s
 SRCS += ft_isupper.s
 SRCS += ft_isalpha.s
+SRCS += ft_isdigit.s
 
 all: $(NAME)
 

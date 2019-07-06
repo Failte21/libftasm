@@ -105,6 +105,24 @@ int test_isalpha()
 	return _test_isalpha("Hello, world!, @Yolo #AsM4Life");
 }
 
+int _test_isdigit(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isdigit(*s);
+	int ret_b = ft_isdigit(*s);
+	printf("%c: isdigit: %d, ft_isdigit: %d\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isdigit(s + 1);
+}
+
+int test_isdigit()
+{
+	printf("-----------ISDIGIT----------\n");
+	return _test_isdigit("123... Hey U ! 456...1 more T1me !!");
+}
+
 int print_partial(char *test_name, int passed)
 {
 
@@ -126,5 +144,6 @@ int main()
 	err += print_partial("STRLEN", test_strlen());
 	err += print_partial("PUTS", test_puts());
 	err += print_partial("ISALPHA", test_isalpha());
+	err += print_partial("ISDIGIT", test_isdigit());
 	return (err);
 }
