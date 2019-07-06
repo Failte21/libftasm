@@ -19,6 +19,7 @@ SRCS += ft_tolower.s
 SRCS += ft_memset.s
 SRCS += ft_memcpy.s
 SRCS += ft_strdup.s
+SRCS += ft_cat.s
 
 all: $(NAME)
 
