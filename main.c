@@ -284,6 +284,54 @@ int test_isprint()
 	_test_isprint_range(0, 10);
 }
 
+int _test_toupper_wide(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = toupper(*s | 0x1000);
+	int ret_b = ft_toupper(*s | 0x1000);
+	
+	printf("0x%X: toupper: %d, ft_toupper: %d\n", *s | 0x1000, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_toupper_wide(s + 1);
+}
+
+int _test_toupper_range(int current, int n)
+{
+	if (n == 0) {
+		return 0;
+	}
+	int ret_a = toupper(current);
+	int ret_b = ft_toupper(current);
+	
+	printf("0x%X: toupper: %d, ft_toupper: %d\n", current, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_toupper_range(current - 100, n - 1) + _test_toupper_range(current + 100, n - 1);
+}
+
+int _test_toupper(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = toupper(*s);
+	int ret_b = ft_toupper(*s);
+	printf("%c: toupper: %c, ft_toupper: %c\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_toupper(s + 1);
+}
+
+int test_toupper()
+{
+	printf("-----------TOUPPER----------\n");
+	return 
+	_test_toupper("123... Hey U ! 456...1 more T1me !!") +
+	_test_toupper_wide("123... Hey U ! 456...1 more T1me !!") +
+	_test_toupper_range(0, 10);
+}
+
 int print_partial(char *test_name, int passed)
 {
 
@@ -309,6 +357,7 @@ int main()
 	err += print_partial("ISALNUM", test_isalnum());
 	err += print_partial("ISASCII", test_isascii());
 	err += print_partial("ISPRINT", test_isprint());
+	err += print_partial("TOUPPER", test_toupper());
 	wchar_t w  = 0x1000 | 'A';
 	return (err);
 }
