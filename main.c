@@ -229,11 +229,59 @@ int _test_isascii_range(int current, int n)
 
 int test_isascii()
 {
-	printf("-----------ISALNUM----------\n");
+	printf("-----------ISASCII----------\n");
 	return 
 	_test_isascii("123... Hey U ! 456...1 more T1me !!") +
 	_test_isascii_wide("123... Hey U ! 456...1 more T1me !!") +
 	_test_isascii_range(0, 10);
+}
+
+int _test_isprint_wide(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isprint(*s | 0x1000);
+	int ret_b = ft_isprint(*s | 0x1000);
+	
+	printf("0x%X: isprint: %d, ft_isprint: %d\n", *s | 0x1000, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isprint_wide(s + 1);
+}
+
+int _test_isprint_range(int current, int n)
+{
+	if (n == 0) {
+		return 0;
+	}
+	int ret_a = isprint(current);
+	int ret_b = ft_isprint(current);
+	
+	printf("0x%X: isprint: %d, ft_isprint: %d\n", current, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isprint_range(current - 100, n - 1) + _test_isprint_range(current + 100, n - 1);
+}
+
+int _test_isprint(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isprint(*s);
+	int ret_b = ft_isprint(*s);
+	printf("%c: isprint: %d, ft_isprint: %d\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isprint(s + 1);
+}
+
+int test_isprint()
+{
+	printf("-----------ISPRINT----------\n");
+	return 
+	_test_isprint("123... Hey U ! 456...1 more T1me !!") +
+	_test_isprint_wide("123... Hey U ! 456...1 more T1me !!") +
+	_test_isprint_range(0, 10);
 }
 
 int print_partial(char *test_name, int passed)
@@ -260,6 +308,7 @@ int main()
 	err += print_partial("ISDIGIT", test_isdigit());
 	err += print_partial("ISALNUM", test_isalnum());
 	err += print_partial("ISASCII", test_isascii());
+	err += print_partial("ISPRINT", test_isprint());
 	wchar_t w  = 0x1000 | 'A';
 	return (err);
 }

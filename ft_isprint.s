@@ -1,16 +1,16 @@
 section .text
-	global _ft_isascii
+	global _ft_isprint
 
-_ft_isascii:
+_ft_isprint:
 
 init:
 	push rbp
 	mov rbp, rsp
 
-ft_isascii:
-	cmp rdi, 0
+ft_isprint:
+	cmp rdi, 0x20
 	jl ret_false
-	cmp rdi, 0x7F
+	cmp rdi, 0x7E
 	jg ret_false
 	jmp ret_true
 
