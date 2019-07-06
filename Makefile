@@ -8,6 +8,8 @@ SRCS += ft_strcat.s
 SRCS += ft_strlen.s
 SRCS += ft_puts.s
 SRCS += ft_islower.s
+SRCS += ft_isupper.s
+SRCS += ft_isalpha.s
 
 all: $(NAME)
 

@@ -87,22 +87,22 @@ int test_puts()
 	return _test_puts("Hello, world!");
 }
 
-int _test_islower(char *s)
+int _test_isalpha(char *s)
 {
 	if (*s == 0)
 		return 0;
-	int ret_a = islower(*s);
-	int ret_b = ft_islower(*s);
-	printf("%c: islower: %d, ft_islower: %d\n", *s, ret_a, ret_b);
+	int ret_a = isalpha(*s);
+	int ret_b = ft_isalpha(*s);
+	printf("%c: isalpha: %d, ft_isalpha: %d\n", *s, ret_a, ret_b);
 	if (ret_a != ret_b)
 		return 1;
-	return _test_islower(s + 1);
+	return _test_isalpha(s + 1);
 }
 
-int test_islower()
+int test_isalpha()
 {
-	printf("-----------ISLOWER----------\n");
-	return _test_islower("Hello, world!, @Yolo #AsM4Life");
+	printf("-----------ISALPHA----------\n");
+	return _test_isalpha("Hello, world!, @Yolo #AsM4Life");
 }
 
 int print_partial(char *test_name, int passed)
@@ -125,6 +125,6 @@ int main()
 	// err += print_partial("STRCAT", test_strcat());
 	err += print_partial("STRLEN", test_strlen());
 	err += print_partial("PUTS", test_puts());
-	err += print_partial("ISLOWER", test_islower());
+	err += print_partial("ISALPHA", test_isalpha());
 	return (err);
 }
