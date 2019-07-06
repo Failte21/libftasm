@@ -332,6 +332,83 @@ int test_toupper()
 	_test_toupper_range(0, 10);
 }
 
+int _test_tolower_wide(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = tolower(*s | 0x1000);
+	int ret_b = ft_tolower(*s | 0x1000);
+	
+	printf("0x%X: tolower: %d, ft_tolower: %d\n", *s | 0x1000, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_tolower_wide(s + 1);
+}
+
+int _test_tolower_range(int current, int n)
+{
+	if (n == 0) {
+		return 0;
+	}
+	int ret_a = tolower(current);
+	int ret_b = ft_tolower(current);
+	
+	printf("0x%X: tolower: %d, ft_tolower: %d\n", current, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_tolower_range(current - 100, n - 1) + _test_tolower_range(current + 100, n - 1);
+}
+
+int _test_tolower(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = tolower(*s);
+	int ret_b = ft_tolower(*s);
+	printf("%c: tolower: %c, ft_tolower: %c\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_tolower(s + 1);
+}
+
+int test_tolower()
+{
+	printf("-----------TOLOWER----------\n");
+	return 
+	_test_tolower("123... Hey U ! 456...1 more T1me !!") +
+	_test_tolower_wide("123... Hey U ! 456...1 more T1me !!") +
+	_test_tolower_range(0, 10);
+}
+
+int _test_memset(char *s[7], int c, int i)
+{
+	if (i < 0)
+		return 0;
+	char	*clone_a = strdup(s[i]);
+	char	*clone_b = strdup(s[i]);
+	int		len = strlen(s[i]);
+	char	*s_a = memset(clone_a, i, len);
+	char	*s_b = ft_memset(clone_b, i, len);
+	printf("memset: %s\nft_memset: %s\n", s_a, s_b);
+	return memcmp(s_a, s_b, len) + _test_memset(s, c, i - 1);
+}
+
+int test_memset()
+{
+	char	*strs[7] = {
+		"Hello world!\n",
+		"Open the gates !!!\n",
+		"Hat er sich von 0 auf 100 in den Raum gesetzt\n",
+		"Nunc egestas faucibus sapien ut ultrices. Curabitur convallis tellus a dignissim varius. Sed ac condimentum nulla. Proin vehicula, quam ac dictum accumsan, velit elit condimentum ipsum, ut sodales nibh urna nec ex. Nam vehicula felis nulla. Praesent scelerisque ex ipsum, sit amet facilisis lorem luctus in. Duis lacus urna, ultrices vel nunc id, consectetur sodales ante.\n",
+		"Ut scelerisque, enim nec eleifend rutrum, diam augue condimentum velit, vitae consectetur risus lacus vel ex. Fusce quis felis ut dui malesuada accumsan vehicula et erat. Suspendisse feugiat id justo nec sollicitudin. Curabitur sodales nibh neque, id fringilla nulla tincidunt nec. Suspendisse vel felis eget enim bibendum ornare. Sed pulvinar est quis eros fringilla, vitae egestas leo hendrerit. Donec rutrum consequat nunc, mattis vehicula arcu molestie id. Donec rutrum velit ut rhoncus pulvinar.\n",
+		"Nam sollicitudin faucibus nulla. In hac habitasse platea dictumst. Donec at blandit tortor, vitae molestie libero. Mauris porttitor nec est nec venenatis. Nunc tortor quam, vehicula ut malesuada in, sodales vitae enim. Donec ac placerat nunc, auctor facilisis urna. Donec blandit lectus ac nunc luctus, et bibendum est aliquam. Curabitur suscipit, est euismod tristique porta, felis mauris dignissim enim, vel mattis metus lacus et erat. Curabitur laoreet dui at lorem sollicitudin, et auctor ligula dapibus. Fusce ut dui sem. Etiam vel varius arcu. Phasellus eget tincidunt quam.",
+		"Nullam fringilla, ipsum eget venenatis vulputate, quam sem venenatis urna, a vehicula turpis est non ipsum. Integer posuere elit id nibh gravida fringilla sed non urna. Vestibulum euismod dignissim purus sit amet sodales. Vivamus scelerisque sed sapien ac euismod. Quisque volutpat leo vel consectetur ornare. Donec pulvinar, elit eu pellentesque tristique, risus nisl aliquet urna, ut ultrices ex turpis et orci. Pellentesque mattis congue nulla et maximus. Nullam accumsan auctor consectetur. Nullam cursus nisi elit, consectetur convallis diam facilisis nec. Donec a massa sit amet ipsum feugiat efficitur. Sed dapibus ullamcorper dictum. Vivamus mollis convallis purus et efficitur. Nam commodo, sapien sed finibus interdum, lorem quam vulputate leo, eget sagittis leo libero eu massa. Integer volutpat, nunc sit amet condimentum pulvinar, nibh nulla luctus diam, non consectetur justo arcu id tortor. Aliquam ut tellus a neque lobortis lobortis vel et metus."
+	};
+	return
+	_test_memset(strs, 'a', 6) +
+	_test_memset(strs, 'a' | 0x0100, 6);
+}
+
 int print_partial(char *test_name, int passed)
 {
 
@@ -341,15 +418,15 @@ int print_partial(char *test_name, int passed)
 		printf("%s%s: FAILURE", RED, test_name);
 	printf("%s\n\n", BASE);
 	return passed;
-} 
+}
 
 int main()
 {
 	int	err;
 
 	err = 0;
-	// err += print_partial("BZERO", test_bzero());
-	// err += print_partial("STRCAT", test_strcat());
+	err += print_partial("BZERO", test_bzero());
+	err += print_partial("STRCAT", test_strcat());
 	err += print_partial("STRLEN", test_strlen());
 	err += print_partial("PUTS", test_puts());
 	err += print_partial("ISALPHA", test_isalpha());
@@ -358,6 +435,7 @@ int main()
 	err += print_partial("ISASCII", test_isascii());
 	err += print_partial("ISPRINT", test_isprint());
 	err += print_partial("TOUPPER", test_toupper());
-	wchar_t w  = 0x1000 | 'A';
+	err += print_partial("TOLOWER", test_tolower());
+	err += print_partial("MEMSET", test_memset());
 	return (err);
 }

@@ -15,6 +15,8 @@ SRCS += ft_isalnum.s
 SRCS += ft_isascii.s
 SRCS += ft_isprint.s
 SRCS += ft_toupper.s
+SRCS += ft_tolower.s
+SRCS += ft_memset.s
 
 all: $(NAME)
 
