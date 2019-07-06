@@ -8,18 +8,18 @@ init:
 	mov rbp, rsp
 
 ft_isdigit:
-	cmp dil, '0'
+	cmp rdi, 0x31
 	jl ret_false
-	cmp dil, '9'
+	cmp rdi, 0x39
 	jg ret_false
 	jmp ret_true
 
 ret_false:
-	mov al, 0
+	mov rax, 0
 	jmp end
 
 ret_true:
-	mov al, 1
+	mov rax, 1
 
 end:
 	leave

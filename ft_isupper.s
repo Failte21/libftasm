@@ -8,9 +8,9 @@ init:
 	mov rbp, rsp
 
 ft_isupper:
-	cmp dil, 'A'
+	cmp rdi, 0x41
 	jl ret_false
-	cmp dil, 'Z'
+	cmp rdi, 0x5a
 	jg ret_false
 	jmp ret_true
 

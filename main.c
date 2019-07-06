@@ -99,10 +99,26 @@ int _test_isalpha(char *s)
 	return _test_isalpha(s + 1);
 }
 
+int _test_isalpha_wide(char *s)
+{
+	int wide = *s | 0x1000;
+ 
+	if (*s == 0)
+		return 0;
+	int ret_a = isalpha(wide);
+	int ret_b = ft_isalpha(wide);
+	printf("0x%X: isalpha: %d, ft_isalpha: %d\n", wide, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isalpha(s + 1);
+}
+
 int test_isalpha()
 {
 	printf("-----------ISALPHA----------\n");
-	return _test_isalpha("Hello, world!, @Yolo #AsM4Life");
+	return
+	_test_isalpha("Hello, world!, @Yolo #AsM4Life") +
+	_test_isalpha_wide("Hello, world!, @Yolo #AsM4Life");
 }
 
 int _test_isdigit(char *s)
@@ -117,10 +133,25 @@ int _test_isdigit(char *s)
 	return _test_isdigit(s + 1);
 }
 
+int _test_isdigit_wide(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isdigit(*s | 0x1000);
+	int ret_b = ft_isdigit(*s | 0x1000);
+	
+	printf("0x%X: isdigit: %d, ft_isdigit: %d\n", *s | 0x1000, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isdigit_wide(s + 1);
+}
+
 int test_isdigit()
 {
 	printf("-----------ISDIGIT----------\n");
-	return _test_isdigit("123... Hey U ! 456...1 more T1me !!");
+	return 
+	_test_isdigit("123... Hey U ! 456...1 more T1me !!") +
+	_test_isdigit_wide("123... Hey U ! 456...1 more T1me !!");
 }
 
 int print_partial(char *test_name, int passed)
@@ -145,5 +176,6 @@ int main()
 	err += print_partial("PUTS", test_puts());
 	err += print_partial("ISALPHA", test_isalpha());
 	err += print_partial("ISDIGIT", test_isdigit());
+	wchar_t w  = 0x1000 | 'A';
 	return (err);
 }

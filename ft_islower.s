@@ -8,9 +8,9 @@ init:
 	mov rbp, rsp
 
 ft_islower:
-	cmp dil, 'a'
+	cmp rdi, 0x61
 	jl ret_false
-	cmp dil, 'z'
+	cmp rdi, 0x7a
 	jg ret_false
 	jmp ret_true
 
