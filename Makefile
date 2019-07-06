@@ -12,6 +12,7 @@ SRCS += ft_isupper.s
 SRCS += ft_isalpha.s
 SRCS += ft_isdigit.s
 SRCS += ft_isalnum.s
+SRCS += ft_isascii.s
 
 all: $(NAME)
 

@@ -187,6 +187,55 @@ int test_isalnum()
 	_test_isalnum_wide("123... Hey U ! 456...1 more T1me !!");
 }
 
+
+int _test_isascii(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isascii(*s);
+	int ret_b = ft_isascii(*s);
+	printf("%c: isascii: %d, ft_isascii: %d\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isascii(s + 1);
+}
+
+int _test_isascii_wide(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isascii(*s | 0x1000);
+	int ret_b = ft_isascii(*s | 0x1000);
+	
+	printf("0x%X: isascii: %d, ft_isascii: %d\n", *s | 0x1000, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isascii_wide(s + 1);
+}
+
+int _test_isascii_range(int current, int n)
+{
+	if (n == 0) {
+		return 0;
+	}
+	int ret_a = isascii(current);
+	int ret_b = ft_isascii(current);
+	
+	printf("0x%X: isascii: %d, ft_isascii: %d\n", current, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isascii_range(current - 100, n - 1) + _test_isascii_range(current + 100, n - 1);
+}
+
+int test_isascii()
+{
+	printf("-----------ISALNUM----------\n");
+	return 
+	_test_isascii("123... Hey U ! 456...1 more T1me !!") +
+	_test_isascii_wide("123... Hey U ! 456...1 more T1me !!") +
+	_test_isascii_range(0, 10);
+}
+
 int print_partial(char *test_name, int passed)
 {
 
@@ -210,6 +259,7 @@ int main()
 	err += print_partial("ISALPHA", test_isalpha());
 	err += print_partial("ISDIGIT", test_isdigit());
 	err += print_partial("ISALNUM", test_isalnum());
+	err += print_partial("ISASCII", test_isascii());
 	wchar_t w  = 0x1000 | 'A';
 	return (err);
 }
