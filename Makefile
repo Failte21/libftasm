@@ -17,6 +17,7 @@ SRCS += ft_isprint.s
 SRCS += ft_toupper.s
 SRCS += ft_tolower.s
 SRCS += ft_memset.s
+SRCS += ft_memcpy.s
 
 all: $(NAME)
 
