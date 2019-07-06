@@ -1,6 +1,11 @@
 #include "libfts.h"
 #include <stdio.h>
 
+#define RED		"\x1B[31m"
+#define GREEN	"\x1B[32m"
+#define BLUE	"\x1B[34m"
+#define BASE	"\x1B[0m"
+
 int test_bzero()
 {
 	char	*a;
@@ -32,6 +37,7 @@ int test_bzero()
 	return (0);
 }
 
+// TODO: improve
 int test_strcat()
 {
 	char	*a;
@@ -81,16 +87,44 @@ int test_puts()
 	return _test_puts("Hello, world!");
 }
 
+int _test_islower(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = islower(*s);
+	int ret_b = ft_islower(*s);
+	printf("%c: islower: %d, ft_islower: %d\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_islower(s + 1);
+}
+
+int test_islower()
+{
+	printf("-----------ISLOWER----------\n");
+	return _test_islower("Hello, world!, @Yolo #AsM4Life");
+}
+
+int print_partial(char *test_name, int passed)
+{
+
+	if (passed == 0)
+		printf("%s%s: SUCCESS !", GREEN, test_name);
+	else
+		printf("%s%s: FAILURE", RED, test_name);
+	printf("%s\n\n", BASE);
+	return passed;
+} 
+
 int main()
 {
 	int	err;
 
 	err = 0;
-	// err += test_bzero();
-	// err += test_strcat();
-	err += test_strlen();
-	// return ft_puts("test______");
-	// int len = ft_puts("test______");a
-	err += test_puts();
+	// err += print_partial("BZERO", test_bzero());
+	// err += print_partial("STRCAT", test_strcat());
+	err += print_partial("STRLEN", test_strlen());
+	err += print_partial("PUTS", test_puts());
+	err += print_partial("ISLOWER", test_islower());
 	return (err);
 }
