@@ -11,6 +11,7 @@ SRCS += ft_islower.s
 SRCS += ft_isupper.s
 SRCS += ft_isalpha.s
 SRCS += ft_isdigit.s
+SRCS += ft_isalnum.s
 
 all: $(NAME)
 

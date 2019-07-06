@@ -154,6 +154,39 @@ int test_isdigit()
 	_test_isdigit_wide("123... Hey U ! 456...1 more T1me !!");
 }
 
+int _test_isalnum(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isalnum(*s);
+	int ret_b = ft_isalnum(*s);
+	printf("%c: isalnum: %d, ft_isalnum: %d\n", *s, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isalnum(s + 1);
+}
+
+int _test_isalnum_wide(char *s)
+{
+	if (*s == 0)
+		return 0;
+	int ret_a = isalnum(*s | 0x1000);
+	int ret_b = ft_isalnum(*s | 0x1000);
+	
+	printf("0x%X: isalnum: %d, ft_isalnum: %d\n", *s | 0x1000, ret_a, ret_b);
+	if (ret_a != ret_b)
+		return 1;
+	return _test_isalnum_wide(s + 1);
+}
+
+int test_isalnum()
+{
+	printf("-----------ISALNUM----------\n");
+	return 
+	_test_isalnum("123... Hey U ! 456...1 more T1me !!") +
+	_test_isalnum_wide("123... Hey U ! 456...1 more T1me !!");
+}
+
 int print_partial(char *test_name, int passed)
 {
 
@@ -176,6 +209,7 @@ int main()
 	err += print_partial("PUTS", test_puts());
 	err += print_partial("ISALPHA", test_isalpha());
 	err += print_partial("ISDIGIT", test_isdigit());
+	err += print_partial("ISALNUM", test_isalnum());
 	wchar_t w  = 0x1000 | 'A';
 	return (err);
 }
