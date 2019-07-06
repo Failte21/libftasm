@@ -441,6 +441,35 @@ int test_memcpy()
 	_test_memcpy(strs, 6);
 }
 
+int _test_strdup(char *s[7], int i)
+{
+	if (i == 0)
+		return 0;
+	char	*cpy = strdup(s[i]);
+	char	*cpy_b = strdup(s[i]);
+	printf("strdup: %s\n\nft_strdup: %s\n\n\n", cpy, cpy_b);
+	int res = memcmp(cpy, cpy_b, strlen(s[i]));
+	free(cpy);
+	free(cpy_b);
+	return res + _test_strdup(s, i - 1);
+}
+
+int test_strdup()
+{
+	printf("-----------STRDUP----------\n");
+	char	*strs[7] = {
+		"Hello world!\n",
+		"Open the gates !!!\n",
+		"Hat er sich von 0 auf 100 in den Raum gesetzt\n",
+		"Nunc egestas faucibus sapien ut ultrices. Curabitur convallis tellus a dignissim varius. Sed ac condimentum nulla. Proin vehicula, quam ac dictum accumsan, velit elit condimentum ipsum, ut sodales nibh urna nec ex. Nam vehicula felis nulla. Praesent scelerisque ex ipsum, sit amet facilisis lorem luctus in. Duis lacus urna, ultrices vel nunc id, consectetur sodales ante.\n",
+		"Ut scelerisque, enim nec eleifend rutrum, diam augue condimentum velit, vitae consectetur risus lacus vel ex. Fusce quis felis ut dui malesuada accumsan vehicula et erat. Suspendisse feugiat id justo nec sollicitudin. Curabitur sodales nibh neque, id fringilla nulla tincidunt nec. Suspendisse vel felis eget enim bibendum ornare. Sed pulvinar est quis eros fringilla, vitae egestas leo hendrerit. Donec rutrum consequat nunc, mattis vehicula arcu molestie id. Donec rutrum velit ut rhoncus pulvinar.\n",
+		"Nam sollicitudin faucibus nulla. In hac habitasse platea dictumst. Donec at blandit tortor, vitae molestie libero. Mauris porttitor nec est nec venenatis. Nunc tortor quam, vehicula ut malesuada in, sodales vitae enim. Donec ac placerat nunc, auctor facilisis urna. Donec blandit lectus ac nunc luctus, et bibendum est aliquam. Curabitur suscipit, est euismod tristique porta, felis mauris dignissim enim, vel mattis metus lacus et erat. Curabitur laoreet dui at lorem sollicitudin, et auctor ligula dapibus. Fusce ut dui sem. Etiam vel varius arcu. Phasellus eget tincidunt quam.",
+		"Nullam fringilla, ipsum eget venenatis vulputate, quam sem venenatis urna, a vehicula turpis est non ipsum. Integer posuere elit id nibh gravida fringilla sed non urna. Vestibulum euismod dignissim purus sit amet sodales. Vivamus scelerisque sed sapien ac euismod. Quisque volutpat leo vel consectetur ornare. Donec pulvinar, elit eu pellentesque tristique, risus nisl aliquet urna, ut ultrices ex turpis et orci. Pellentesque mattis congue nulla et maximus. Nullam accumsan auctor consectetur. Nullam cursus nisi elit, consectetur convallis diam facilisis nec. Donec a massa sit amet ipsum feugiat efficitur. Sed dapibus ullamcorper dictum. Vivamus mollis convallis purus et efficitur. Nam commodo, sapien sed finibus interdum, lorem quam vulputate leo, eget sagittis leo libero eu massa. Integer volutpat, nunc sit amet condimentum pulvinar, nibh nulla luctus diam, non consectetur justo arcu id tortor. Aliquam ut tellus a neque lobortis lobortis vel et metus."
+	};
+	return
+	_test_strdup(strs, 6);
+}
+
 int print_partial(char *test_name, int passed)
 {
 
@@ -457,18 +486,19 @@ int main()
 	int	err;
 
 	err = 0;
-	// err += print_partial("BZERO", test_bzero());
-	// err += print_partial("STRCAT", test_strcat());
-	// err += print_partial("STRLEN", test_strlen());
-	// err += print_partial("PUTS", test_puts());
-	// err += print_partial("ISALPHA", test_isalpha());
-	// err += print_partial("ISDIGIT", test_isdigit());
-	// err += print_partial("ISALNUM", test_isalnum());
-	// err += print_partial("ISASCII", test_isascii());
-	// err += print_partial("ISPRINT", test_isprint());
-	// err += print_partial("TOUPPER", test_toupper());
-	// err += print_partial("TOLOWER", test_tolower());
-	// err += print_partial("MEMSET", test_memset());
+	err += print_partial("BZERO", test_bzero());
+	err += print_partial("STRCAT", test_strcat());
+	err += print_partial("STRLEN", test_strlen());
+	err += print_partial("PUTS", test_puts());
+	err += print_partial("ISALPHA", test_isalpha());
+	err += print_partial("ISDIGIT", test_isdigit());
+	err += print_partial("ISALNUM", test_isalnum());
+	err += print_partial("ISASCII", test_isascii());
+	err += print_partial("ISPRINT", test_isprint());
+	err += print_partial("TOUPPER", test_toupper());
+	err += print_partial("TOLOWER", test_tolower());
+	err += print_partial("MEMSET", test_memset());
 	err += print_partial("MEMCPY", test_memcpy());
+	err += print_partial("STRDUP", test_strdup());
 	return (err);
 }
