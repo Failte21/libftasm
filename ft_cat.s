@@ -1,5 +1,6 @@
 %define MACH_SYSCALL(nb)	0x2000000 | nb
 %define READ 3
+%define WRITE 4
 
 extern _ft_puts
 
@@ -11,15 +12,15 @@ _ft_cat:
 init:
 	push rbp
 	mov rbp, rsp
+	mov rdx, 8						; BUF_SIZE
 
 ft_cat:
-	mov rdx, 8
 	mov rax, MACH_SYSCALL(READ)
 	syscall
-	cmp rax, 0
-	jl end
-	mov rdi, rsi
-	call _ft_puts
+	mov rdi, 1						; STDOUT
+	mov rdx, rax
+	mov rax, MACH_SYSCALL(WRITE)
+	syscall
 
 end:
 	leave
