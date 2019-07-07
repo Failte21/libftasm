@@ -15,20 +15,26 @@ init:
 	mov rdx, 8						; BUF_SIZE
 
 ft_cat:
+
+read:
 	sub rsp, 8
 	push rdx
 	mov rax, MACH_SYSCALL(READ)
 	syscall
-	sub rsp, 8
+	pop rdx
+	add rsp, 8 
+
+write:
+	sub rsp, 16
 	push rax
+	push rdx
 	mov rdi, 1						; STDOUT
 	mov rdx, rax
 	mov rax, MACH_SYSCALL(WRITE)
 	syscall
 	pop rax
-	add rsp, 8
 	pop rdx
-	add rsp, 8 
+	add rsp, 16
 
 lp:
 	cmp rax, 0
