@@ -6,13 +6,16 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 09:34:29 by lsimon            #+#    #+#             */
-/*   Updated: 2019/07/06 16:56:52 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/07/07 13:06:32 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 void    ft_bzero(void *s, size_t n);
 char    *ft_strcat(char *restrict s1, const char *restrict s2);
