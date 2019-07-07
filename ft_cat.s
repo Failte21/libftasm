@@ -26,6 +26,7 @@ read:
 	lea rsi, [rel buffer]			; init buffer
 	mov rax, MACH_SYSCALL(READ)
 	syscall
+	jc end							; jump if carry
 	cmp rax, 0						; leave if nothing else to read or error
 	jle end
 
