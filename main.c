@@ -56,12 +56,12 @@ int test_strcat()
 
 int _strlen(char *s)
 {
-	int	a;
-	int b;
+	size_t	a;
+	size_t b;
 
 	a = strlen(s);
-	b = strlen(s);
-	printf("strlen: %d, ft_strlen: %d\n", a, b);
+	b = ft_strlen(s);
+	printf("strlen: %zu, ft_strlen: %zu\n", a, b);
 	return a - b;
 
 }
@@ -523,7 +523,7 @@ int main()
 	err = 0;
 	// err += print_partial("BZERO", test_bzero());
 	// err += print_partial("STRCAT", test_strcat());
-	// err += print_partial("STRLEN", test_strlen());
+	err += print_partial("STRLEN", test_strlen());
 	// err += print_partial("PUTS", test_puts());
 	// err += print_partial("ISALPHA", test_isalpha());
 	// err += print_partial("ISDIGIT", test_isdigit());
@@ -533,7 +533,7 @@ int main()
 	// err += print_partial("TOUPPER", test_toupper());
 	// err += print_partial("TOLOWER", test_tolower());
 	// err += print_partial("MEMSET", test_memset());
-	err += print_partial("MEMCPY", test_memcpy());
+	// err += print_partial("MEMCPY", test_memcpy());
 	// err += print_partial("STRDUP", test_strdup());
 	return print_partial("OVERALL", err);
 	// ft_cat(0);
