@@ -404,17 +404,24 @@ int test_tolower()
 	_test_tolower_range(0, 10);
 }
 
+int _cmp_memset(char *s, int c)
+{
+	char	*clone_a = strdup(s);
+	char	*clone_b = strdup(s);
+	int		len = strlen(s);
+	char	*s_a = memset(clone_a, c, len);
+	char	*s_b = ft_memset(clone_b, c, len);
+	printf("memset: %s\nft_memset: %s\n", s_a, s_b);
+	int err = memcmp(s_a, s_b, len);
+	printf("diff: %d\n", err);
+	return err;
+}
+
 int _test_memset(char *s[7], int c, int i)
 {
 	if (i < 0)
 		return 0;
-	char	*clone_a = strdup(s[i]);
-	char	*clone_b = strdup(s[i]);
-	int		len = strlen(s[i]);
-	char	*s_a = memset(clone_a, i, len);
-	char	*s_b = ft_memset(clone_b, i, len);
-	printf("memset: %s\nft_memset: %s\n", s_a, s_b);
-	return memcmp(s_a, s_b, len) + _test_memset(s, c, i - 1);
+	return _cmp_memset(s[i], c) + _test_memset(s, c, i - 1);
 }
 
 int test_memset()
@@ -433,7 +440,6 @@ int test_memset()
 	_test_memset(strs, 'a', 6) +
 	_test_memset(strs, 'a' | 0x0100, 6);
 }
-
 int _test_memcpy(char *s[7], int i)
 {
 	if (i == 0)
@@ -505,6 +511,7 @@ int print_partial(char *test_name, int passed)
 	return passed;
 }
 
+
 int main()
 {
 	int	err;
@@ -512,7 +519,7 @@ int main()
 	err = 0;
 	// err += print_partial("BZERO", test_bzero());
 	// err += print_partial("STRCAT", test_strcat());
-	err += print_partial("STRLEN", test_strlen());
+	// err += print_partial("STRLEN", test_strlen());
 	// err += print_partial("PUTS", test_puts());
 	// err += print_partial("ISALPHA", test_isalpha());
 	// err += print_partial("ISDIGIT", test_isdigit());
@@ -521,9 +528,9 @@ int main()
 	// err += print_partial("ISPRINT", test_isprint());
 	// err += print_partial("TOUPPER", test_toupper());
 	// err += print_partial("TOLOWER", test_tolower());
-	// err += print_partial("MEMSET", test_memset());
+	err += print_partial("MEMSET", test_memset());
 	// err += print_partial("MEMCPY", test_memcpy());
 	// err += print_partial("STRDUP", test_strdup());
+	return print_partial("OVERALL", err);
 	// ft_cat(0);
-	return (err);
 }
