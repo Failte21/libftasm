@@ -8,14 +8,11 @@ init:
 	mov rbp, rsp
 
 ft_memcpy:
-	cmp rdx, 0
-	je end
-	mov cl, byte[rsi + rdx - 1]
-	mov byte[rdi + rdx - 1], cl
-	dec rdx
-	jmp ft_memcpy
+	push rdi						; save original pointer
+	mov rcx, rdx					; store counter
+	rep movsb						; copy rsi -> rdi
+	pop rax							; get original pointer back
 
 end:
-	mov rax, rdi
 	leave
 	ret

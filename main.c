@@ -532,8 +532,8 @@ int main()
 	// err += print_partial("ISPRINT", test_isprint());
 	// err += print_partial("TOUPPER", test_toupper());
 	// err += print_partial("TOLOWER", test_tolower());
-	err += print_partial("MEMSET", test_memset());
-	// err += print_partial("MEMCPY", test_memcpy());
+	// err += print_partial("MEMSET", test_memset());
+	err += print_partial("MEMCPY", test_memcpy());
 	// err += print_partial("STRDUP", test_strdup());
 	return print_partial("OVERALL", err);
 	// ft_cat(0);
