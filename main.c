@@ -426,6 +426,8 @@ int _test_memset(char *s[7], int c, int i)
 
 int test_memset()
 {
+	int err = 0;
+
 	printf("-----------MEMSET----------\n");
 	char	*strs[7] = {
 		"Hello world!\n",
@@ -436,9 +438,11 @@ int test_memset()
 		"Nam sollicitudin faucibus nulla. In hac habitasse platea dictumst. Donec at blandit tortor, vitae molestie libero. Mauris porttitor nec est nec venenatis. Nunc tortor quam, vehicula ut malesuada in, sodales vitae enim. Donec ac placerat nunc, auctor facilisis urna. Donec blandit lectus ac nunc luctus, et bibendum est aliquam. Curabitur suscipit, est euismod tristique porta, felis mauris dignissim enim, vel mattis metus lacus et erat. Curabitur laoreet dui at lorem sollicitudin, et auctor ligula dapibus. Fusce ut dui sem. Etiam vel varius arcu. Phasellus eget tincidunt quam.",
 		"Nullam fringilla, ipsum eget venenatis vulputate, quam sem venenatis urna, a vehicula turpis est non ipsum. Integer posuere elit id nibh gravida fringilla sed non urna. Vestibulum euismod dignissim purus sit amet sodales. Vivamus scelerisque sed sapien ac euismod. Quisque volutpat leo vel consectetur ornare. Donec pulvinar, elit eu pellentesque tristique, risus nisl aliquet urna, ut ultrices ex turpis et orci. Pellentesque mattis congue nulla et maximus. Nullam accumsan auctor consectetur. Nullam cursus nisi elit, consectetur convallis diam facilisis nec. Donec a massa sit amet ipsum feugiat efficitur. Sed dapibus ullamcorper dictum. Vivamus mollis convallis purus et efficitur. Nam commodo, sapien sed finibus interdum, lorem quam vulputate leo, eget sagittis leo libero eu massa. Integer volutpat, nunc sit amet condimentum pulvinar, nibh nulla luctus diam, non consectetur justo arcu id tortor. Aliquam ut tellus a neque lobortis lobortis vel et metus."
 	};
-	return
-	_test_memset(strs, 'a', 6) +
-	_test_memset(strs, 'a' | 0x0100, 6);
+	printf(">>>> Basic tests <<<<\n");
+	err += _test_memset(strs, 'a', 6);
+	printf(">>>> Test with wildchar <<<<\n");
+	err += _test_memset(strs, 'a' | 0x0100, 6);
+	return err;
 }
 int _test_memcpy(char *s[7], int i)
 {

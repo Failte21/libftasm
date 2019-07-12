@@ -3,3 +3,5 @@ a.out*
 *.o
 libfts.a
 syscall.h
+ft_cat
+ft_cat.dSYM/

@@ -8,13 +8,12 @@ init:
 	mov rbp, rsp
 
 ft_memset:
-	cmp rdx, 0
-	jl end
-	mov byte[rdi + rdx - 1], sil
-	dec rdx
-	jmp ft_memset
+	push rdi				; save pointer
+	mov rax, rsi			; store byte
+	mov rcx, rdx			; store counter
+	repz stosb				; load bytes to pointer
+	pop rax					; get original pointer back
 
 end:
-	mov rax, rdi
 	leave
 	ret
