@@ -62,8 +62,8 @@ int test_strlen()
 	printf("-----------STRLEN----------\n");
 	a = strlen("Hello world");
 	b = ft_strlen("Hello world");
-	printf("real: %d, mine: %d\n", a, b);
-	return (0);
+	printf("strlen: %d, ft_strlen: %d\n", a, b);
+	return a - b;
 }
 
 int _test_puts(char *s)
@@ -488,7 +488,7 @@ int main()
 	err = 0;
 	// err += print_partial("BZERO", test_bzero());
 	// err += print_partial("STRCAT", test_strcat());
-	// err += print_partial("STRLEN", test_strlen());
+	err += print_partial("STRLEN", test_strlen());
 	// err += print_partial("PUTS", test_puts());
 	// err += print_partial("ISALPHA", test_isalpha());
 	// err += print_partial("ISDIGIT", test_isdigit());
@@ -500,6 +500,6 @@ int main()
 	// err += print_partial("MEMSET", test_memset());
 	// err += print_partial("MEMCPY", test_memcpy());
 	// err += print_partial("STRDUP", test_strdup());
-	ft_cat(0);
+	// ft_cat(0);
 	return (err);
 }

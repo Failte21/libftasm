@@ -6,15 +6,15 @@ _ft_strlen:
 init:
 	push rbp
 	mov rbp, rsp
-    mov eax, 0
 
 lp:
-    cmp byte[rdi], 0
-    je end
-    inc rdi
-    inc eax
-    jmp lp
-
+	mov al, 0
+	mov rcx, 0
+	not rcx
+	repnz scasb
+	not rcx,
+	dec rcx
+	mov rax, rcx
 end:
 	leave
     ret
