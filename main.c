@@ -301,52 +301,36 @@ int test_isprint()
 	return basic + wide;
 }
 
-int _test_toupper_wide(char *s)
+int cmp_toupper(int c)
 {
-	if (*s == 0)
-		return 0;
-	int ret_a = toupper(*s | 0x1000);
-	int ret_b = ft_toupper(*s | 0x1000);
-	
-	printf("0x%X: toupper: %d, ft_toupper: %d\n", *s | 0x1000, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_toupper_wide(s + 1);
-}
-
-int _test_toupper_range(int current, int n)
-{
-	if (n == 0) {
-		return 0;
-	}
-	int ret_a = toupper(current);
-	int ret_b = ft_toupper(current);
-	
-	printf("0x%X: toupper: %d, ft_toupper: %d\n", current, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_toupper_range(current - 100, n - 1) + _test_toupper_range(current + 100, n - 1);
+	int assert_cmp = toupper(c) - ft_toupper(c);
+	printf("0x%X: %s\n", c, assert_cmp == 0 ? "OK" : "KO");
+	return assert_cmp;
 }
 
 int _test_toupper(char *s)
 {
 	if (*s == 0)
-		return 0;
-	int ret_a = toupper(*s);
-	int ret_b = ft_toupper(*s);
-	printf("%c: toupper: %c, ft_toupper: %c\n", *s, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_toupper(s + 1);
+		return cmp_toupper(*s);
+	return cmp_toupper(*s) + _test_toupper(s + 1);
+}
+
+int _test_toupper_wide(char *s)
+{
+	int wide = *s | 0x1000;
+	if (*s == 0)
+		return cmp_toupper(wide);
+	return cmp_toupper(wide) + _test_toupper_wide(s + 1);
 }
 
 int test_toupper()
 {
 	printf("-----------TOUPPER----------\n");
-	return 
-	_test_toupper("123... Hey U ! 456...1 more T1me !!") +
-	_test_toupper_wide("123... Hey U ! 456...1 more T1me !!") +
-	_test_toupper_range(0, 10);
+	printf(">>>> Basic tests <<<<\n");
+	int basic = _test_toupper("Hello, world!, @Yolo #AsM4Life");
+	printf("\n>>>> With wide chars <<<<\n");
+	int wide = _test_toupper_wide("Hello, world!, @Yolo #AsM4Life");
+	return basic + wide;
 }
 
 int _test_tolower_wide(char *s)
