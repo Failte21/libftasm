@@ -1,7 +1,7 @@
 #include "libfts.h"
 #include <stdio.h>
 
-# define RED		"\x1B[31m"
+# define RED	"\x1B[31m"
 # define GREEN	"\x1B[32m"
 # define BLUE	"\x1B[34m"
 # define BASE	"\x1B[0m"
@@ -117,25 +117,28 @@ int test_strlen()
 	return err;
 }
 
-int _test_puts(char *s)
+int cmp_puts(char *s)
 {
-	int len = strlen(s);
+	int expected = puts(s);
+	int value = ft_puts(s);
 
-	if (len == 0)
-		return 0;
+	int assert_cmp = expected - value;
+	return assert_cmp;
 
-	int ret_a = puts(s);
-	int ret_b = ft_puts(s);
+}
 
-	if (ret_a != ret_b)
-		return 1;
-	return _test_puts(s + 1);
+int _test_puts(char *strs[LEN], int i)
+{
+	if (i == 0)
+		return cmp_puts(strs[i]);
+	return cmp_puts(strs[i]) + _test_puts(strs, i - 1);
 }
 
 int test_puts()
 {
 	printf("-----------PUTS----------\n");
-	return _test_puts("Hello, world!");
+	printf(">>>> Basic tests <<<<\n");
+	return _test_puts(strs, LEN - 1);
 }
 
 int _test_isalpha(char *s)
