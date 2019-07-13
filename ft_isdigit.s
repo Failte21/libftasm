@@ -8,7 +8,7 @@ init:
 	mov rbp, rsp
 
 ft_isdigit:
-	cmp rdi, 0x31
+	cmp rdi, 0x30
 	jl ret_false
 	cmp rdi, 0x39
 	jg ret_false
