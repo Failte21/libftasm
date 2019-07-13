@@ -29,6 +29,6 @@ append:
 	call _ft_memcpy
 
 end:
-	pop rax
+	pop rax					; return original pointer
 	leave
 	ret
