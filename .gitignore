@@ -5,3 +5,5 @@ libfts.a
 syscall.h
 ft_cat
 ft_cat.dSYM/
+ft_cat.txt
+cat.txt
