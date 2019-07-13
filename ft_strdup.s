@@ -14,12 +14,13 @@ init:
 ft_strdup:
 	push rdi			; save pointer
 	call _ft_strlen
-	pop rsi				; get pointer back
+	inc rax				; inc for string terminating char
 	mov rdi, rax
 	push rax			; size to malloc
 	call _malloc
 	pop rdx				; size to copy
 	mov rdi, rax		; freshly allocated pointer
+	pop rsi				; get original string pointer back
 	call _ft_memcpy
 
 end:

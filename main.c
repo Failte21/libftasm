@@ -516,15 +516,19 @@ int test_memcpy()
 
 int _test_strdup(char *s[7], int i)
 {
+	printf("Test %d\n", i);
+	char	*expected = strdup(s[i]);
+	char	*value = ft_strdup(s[i]);
+	// printf("ft_strdup: %s", value);
+	// printf("strdup:    %s\n", expected);
+	int assert_cmp = strcmp(expected, value);
+	printf("Compare: %s\n", assert_cmp == 0 ? "OK" : "KO");
+	printf("\n");
+	free(value);
+	free(expected);
 	if (i == 0)
 		return 0;
-	char	*cpy = strdup(s[i]);
-	char	*cpy_b = strdup(s[i]);
-	printf("strdup: %s\n\nft_strdup: %s\n\n\n", cpy, cpy_b);
-	int res = memcmp(cpy, cpy_b, strlen(s[i]));
-	free(cpy);
-	free(cpy_b);
-	return res + _test_strdup(s, i - 1);
+	return assert_cmp + _test_strdup(s, i - 1);
 }
 
 int test_strdup()
@@ -560,20 +564,19 @@ int main()
 	int	err;
 
 	err = 0;
-	// err += print_partial("BZERO", test_bzero());
+	err += print_partial("BZERO", test_bzero());
 	err += print_partial("STRCAT", test_strcat());
-	// err += print_partial("STRLEN", test_strlen());
-	// err += print_partial("PUTS", test_puts());
-	// err += print_partial("ISALPHA", test_isalpha());
-	// err += print_partial("ISDIGIT", test_isdigit());
-	// err += print_partial("ISALNUM", test_isalnum());
-	// err += print_partial("ISASCII", test_isascii());
-	// err += print_partial("ISPRINT", test_isprint());
-	// err += print_partial("TOUPPER", test_toupper());
-	// err += print_partial("TOLOWER", test_tolower());
-	// err += print_partial("MEMSET", test_memset());
-	// err += print_partial("MEMCPY", test_memcpy());
-	// err += print_partial("STRDUP", test_strdup());
+	err += print_partial("STRLEN", test_strlen());
+	err += print_partial("PUTS", test_puts());
+	err += print_partial("ISALPHA", test_isalpha());
+	err += print_partial("ISDIGIT", test_isdigit());
+	err += print_partial("ISALNUM", test_isalnum());
+	err += print_partial("ISASCII", test_isascii());
+	err += print_partial("ISPRINT", test_isprint());
+	err += print_partial("TOUPPER", test_toupper());
+	err += print_partial("TOLOWER", test_tolower());
+	err += print_partial("MEMSET", test_memset());
+	err += print_partial("MEMCPY", test_memcpy());
+	err += print_partial("STRDUP", test_strdup());
 	return print_partial("OVERALL", err);
-	// ft_cat(0);
 }
