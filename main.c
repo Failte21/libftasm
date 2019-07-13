@@ -399,14 +399,16 @@ int cmp_memcpy(char *s)
 {
 	char	*cpy = strdup("empty..............................");
 	char	*cpy_b = strdup("empty..............................");
-	char	*value = ft_memcpy(cpy, strdup(s), 15);
-	char	*expected = memcpy(cpy_b, strdup(s), 15);
+	char	*value = ft_memcpy(cpy, s, 15);
+	char	*expected = memcpy(cpy_b, s, 15);
 
 	int assert_return = value - cpy;
 	printf("Return value: %s\n", assert_return == 0 ? "OK" : "KO");
 	int assert_cmp = memcmp(value, expected, 15);
 	printf("Compare:      %s\n", assert_cmp == 0 ? "OK" : "KO");
 	printf("\n");
+	free(value);
+	free(expected);
 	return assert_return + assert_cmp;
 }
 
@@ -465,19 +467,19 @@ int main()
 	int	err;
 
 	err = 0;
-	err += print_partial("BZERO", test_bzero());
-	err += print_partial("STRCAT", test_strcat());
-	err += print_partial("STRLEN", test_strlen());
-	err += print_partial("PUTS", test_puts());
-	err += print_partial("ISALPHA", test_isalpha());
-	err += print_partial("ISALNUM", test_isalnum());
-	err += print_partial("ISDIGIT", test_isdigit());
-	err += print_partial("ISASCII", test_isascii());
-	err += print_partial("ISPRINT", test_isprint());
-	err += print_partial("TOUPPER", test_toupper());
-	err += print_partial("TOLOWER", test_tolower());
-	err += print_partial("MEMSET", test_memset());
+	// err += print_partial("BZERO", test_bzero());
+	// err += print_partial("STRCAT", test_strcat());
+	// err += print_partial("STRLEN", test_strlen());
+	// err += print_partial("PUTS", test_puts());
+	// err += print_partial("ISALPHA", test_isalpha());
+	// err += print_partial("ISALNUM", test_isalnum());
+	// err += print_partial("ISDIGIT", test_isdigit());
+	// err += print_partial("ISASCII", test_isascii());
+	// err += print_partial("ISPRINT", test_isprint());
+	// err += print_partial("TOUPPER", test_toupper());
+	// err += print_partial("TOLOWER", test_tolower());
+	// err += print_partial("MEMSET", test_memset());
 	err += print_partial("MEMCPY", test_memcpy());
-	err += print_partial("STRDUP", test_strdup());
+	// err += print_partial("STRDUP", test_strdup());
 	return print_partial("OVERALL", err);
 }
