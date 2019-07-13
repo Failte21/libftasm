@@ -365,7 +365,7 @@ int test_tolower()
 	return basic + wide;
 }
 
-int _cmp_memset(char *s, int c)
+int cmp_memset(char *s, int c)
 {
 	char	*clone_a = strdup(s);
 	char	*clone_b = strdup(s);
@@ -382,40 +382,46 @@ int _test_memset(char *s[7], int c, int i)
 {
 	if (i < 0)
 		return 0;
-	return _cmp_memset(s[i], c) + _test_memset(s, c, i - 1);
+	return cmp_memset(s[i], c) + _test_memset(s, c, i - 1);
 }
 
 int test_memset()
 {
-	int err = 0;
-
 	printf("-----------MEMSET----------\n");
 	printf(">>>> Basic tests <<<<\n");
-	err += _test_memset(strs, 'a', LEN - 1);
-	printf(">>>> Test with wildchar <<<<\n");
-	err += _test_memset(strs, 'a' | 0x0100, LEN - 1);
-	return err;
+	int base = _test_memset(strs, 'a', LEN - 1);
+	printf(">>>> With wildchar <<<<\n");
+	int wide = _test_memset(strs, 'a' | 0x0100, LEN - 1);
+	return base + wide;
 }
-int _test_memcpy(char *s[7], int i)
+
+int cmp_memcpy(char *s)
 {
-	if (i == 0)
-		return 0;
 	char	*cpy = strdup("empty..............................");
 	char	*cpy_b = strdup("empty..............................");
-	char	*res = ft_memcpy(cpy, strdup(s[i]), 15);
-	char	*res_b = memcpy(cpy_b, strdup(s[i]), 15);
-	printf("memcpy: %s\nft_memcpy: %s\n\n", res_b, res);
-	return
-	memcmp(res, res_b, 15) +
-	memcmp(cpy, cpy_b, 15)
-	+ _test_memcpy(s, i - 1);
+	char	*value = ft_memcpy(cpy, strdup(s), 15);
+	char	*expected = memcpy(cpy_b, strdup(s), 15);
+
+	int assert_return = value - cpy;
+	printf("Return value: %s\n", assert_return == 0 ? "OK" : "KO");
+	int assert_cmp = memcmp(value, expected, 15);
+	printf("Compare:      %s\n", assert_cmp == 0 ? "OK" : "KO");
+	printf("\n");
+	return assert_return + assert_cmp;
+}
+
+int _test_memcpy(char *s[LEN], int i)
+{
+	if (i == 0)
+		return cmp_memcpy(s[i]);
+	return cmp_memcpy(s[i]) + _test_memcpy(s, i - 1);
 }
 
 int test_memcpy()
 {
 	printf("-----------MEMCPY----------\n");
-	return
-	_test_memcpy(strs, LEN - 1);
+	printf(">>>> Basic tests <<<<\n");
+	return _test_memcpy(strs, LEN - 1);
 }
 
 int _test_strdup(char *s[7], int i)
