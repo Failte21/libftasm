@@ -428,28 +428,31 @@ int test_memcpy()
 	return _test_memcpy(strs, LEN - 1);
 }
 
-int _test_strdup(char *s[7], int i)
+int cmp_strdup(char *s)
 {
-	printf("Test %d\n", i);
-	char	*expected = strdup(s[i]);
-	char	*value = ft_strdup(s[i]);
-	// printf("ft_strdup: %s", value);
-	// printf("strdup:    %s\n", expected);
+	char	*expected = strdup(s);
+	char	*value = ft_strdup(s);
 	int assert_cmp = strcmp(expected, value);
 	printf("Compare: %s\n", assert_cmp == 0 ? "OK" : "KO");
 	printf("\n");
 	free(value);
 	free(expected);
+	return assert_cmp;
+}
+
+int _test_strdup(char *s[7], int i)
+{
+	printf("Test %d\n", i);
 	if (i == 0)
-		return 0;
-	return assert_cmp + _test_strdup(s, i - 1);
+		return cmp_strdup(s[i]);
+	return cmp_strdup(s[i]) + _test_strdup(s, i - 1);
 }
 
 int test_strdup()
 {
+	printf(">>>> Basic tests <<<<\n");
 	printf("-----------STRDUP----------\n");
-	return
-	_test_strdup(strs, LEN - 1);
+	return _test_strdup(strs, LEN - 1);
 }
 
 int print_partial(char *test_name, int passed)
