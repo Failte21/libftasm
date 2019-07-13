@@ -173,37 +173,36 @@ int test_isalpha()
 	return basic + wide;
 }
 
+int cmp_isdigit(int c)
+{
+	int assert_cmp = isdigit(c) - ft_isdigit(c);
+	printf("0x%X: %s\n", c, assert_cmp == 0 ? "OK" : "KO");
+	return assert_cmp;
+}
+
 int _test_isdigit(char *s)
 {
 	if (*s == 0)
-		return 0;
-	int ret_a = isdigit(*s);
-	int ret_b = ft_isdigit(*s);
-	printf("%c: isdigit: %d, ft_isdigit: %d\n", *s, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isdigit(s + 1);
+		return cmp_isdigit(*s);
+	return cmp_isdigit(*s) + _test_isdigit(s + 1);
 }
 
 int _test_isdigit_wide(char *s)
 {
+	int wide = *s | 0x1000;
 	if (*s == 0)
-		return 0;
-	int ret_a = isdigit(*s | 0x1000);
-	int ret_b = ft_isdigit(*s | 0x1000);
-	
-	printf("0x%X: isdigit: %d, ft_isdigit: %d\n", *s | 0x1000, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isdigit_wide(s + 1);
+		return cmp_isdigit(wide);
+	return cmp_isdigit(wide) + _test_isdigit_wide(s + 1);
 }
 
 int test_isdigit()
 {
 	printf("-----------ISDIGIT----------\n");
-	return 
-	_test_isdigit("123... Hey U ! 456...1 more T1me, 789 000 !!") +
-	_test_isdigit_wide("123... Hey U ! 456...1 more T1me, 789 000 !!");
+	printf(">>>> Basic tests <<<<\n");
+	int basic = _test_isdigit("Hello, world!, @Yolo #AsM4Life");
+	printf("\n>>>> With wide chars <<<<\n");
+	int wide = _test_isdigit_wide("Hello, world!, @Yolo #AsM4Life");
+	return basic + wide;
 }
 
 int _test_isalnum(char *s)
