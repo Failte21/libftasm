@@ -205,39 +205,37 @@ int test_isdigit()
 	return basic + wide;
 }
 
+int cmp_isalnum(int c)
+{
+	int assert_cmp = isalnum(c) - ft_isalnum(c);
+	printf("0x%X: %s\n", c, assert_cmp == 0 ? "OK" : "KO");
+	return assert_cmp;
+}
+
 int _test_isalnum(char *s)
 {
 	if (*s == 0)
-		return 0;
-	int ret_a = isalnum(*s);
-	int ret_b = ft_isalnum(*s);
-	printf("%c: isalnum: %d, ft_isalnum: %d\n", *s, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isalnum(s + 1);
+		return cmp_isalnum(*s);
+	return cmp_isalnum(*s) + _test_isalnum(s + 1);
 }
 
 int _test_isalnum_wide(char *s)
 {
+	int wide = *s | 0x1000;
 	if (*s == 0)
-		return 0;
-	int ret_a = isalnum(*s | 0x1000);
-	int ret_b = ft_isalnum(*s | 0x1000);
-	
-	printf("0x%X: isalnum: %d, ft_isalnum: %d\n", *s | 0x1000, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isalnum_wide(s + 1);
+		return cmp_isalnum(wide);
+	return cmp_isalnum(wide) + _test_isalnum_wide(s + 1);
 }
 
 int test_isalnum()
 {
 	printf("-----------ISALNUM----------\n");
-	return 
-	_test_isalnum("123... Hey U ! 456...1 more T1me !!") +
-	_test_isalnum_wide("123... Hey U ! 456...1 more T1me !!");
+	printf(">>>> Basic tests <<<<\n");
+	int basic = _test_isalnum("Hello, world!, @Yolo #AsM4Life");
+	printf("\n>>>> With wide chars <<<<\n");
+	int wide = _test_isalnum_wide("Hello, world!, @Yolo #AsM4Life");
+	return basic + wide;
 }
-
 
 int _test_isascii(char *s)
 {
@@ -530,8 +528,8 @@ int main()
 	err += print_partial("STRLEN", test_strlen());
 	err += print_partial("PUTS", test_puts());
 	err += print_partial("ISALPHA", test_isalpha());
-	err += print_partial("ISDIGIT", test_isdigit());
 	err += print_partial("ISALNUM", test_isalnum());
+	err += print_partial("ISDIGIT", test_isdigit());
 	err += print_partial("ISASCII", test_isascii());
 	err += print_partial("ISPRINT", test_isprint());
 	err += print_partial("TOUPPER", test_toupper());
