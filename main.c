@@ -141,38 +141,36 @@ int test_puts()
 	return _test_puts(strs, LEN - 1);
 }
 
+int cmp_isalpha(int c)
+{
+	int assert_cmp = isalpha(c) - ft_isalpha(c);
+	printf("0x%X: %s\n", c, assert_cmp == 0 ? "OK" : "KO");
+	return assert_cmp;
+}
+
 int _test_isalpha(char *s)
 {
 	if (*s == 0)
-		return 0;
-	int ret_a = isalpha(*s);
-	int ret_b = ft_isalpha(*s);
-	printf("%c: isalpha: %d, ft_isalpha: %d\n", *s, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isalpha(s + 1);
+		return cmp_isalpha(*s);
+	return cmp_isalpha(*s) + _test_isalpha(s + 1);
 }
 
 int _test_isalpha_wide(char *s)
 {
 	int wide = *s | 0x1000;
- 
 	if (*s == 0)
-		return 0;
-	int ret_a = isalpha(wide);
-	int ret_b = ft_isalpha(wide);
-	printf("0x%X: isalpha: %d, ft_isalpha: %d\n", wide, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isalpha(s + 1);
+		return cmp_isalpha(wide);
+	return cmp_isalpha(wide) + _test_isalpha_wide(s + 1);
 }
 
 int test_isalpha()
 {
 	printf("-----------ISALPHA----------\n");
-	return
-	_test_isalpha("Hello, world!, @Yolo #AsM4Life") +
-	_test_isalpha_wide("Hello, world!, @Yolo #AsM4Life");
+	printf(">>>> Basic tests <<<<\n");
+	int basic = _test_isalpha("Hello, world!, @Yolo #AsM4Life");
+	printf("\n>>>> With wide chars <<<<\n");
+	int wide = _test_isalpha_wide("Hello, world!, @Yolo #AsM4Life");
+	return basic + wide;
 }
 
 int _test_isdigit(char *s)
