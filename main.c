@@ -6,50 +6,48 @@
 #define BLUE	"\x1B[34m"
 #define BASE	"\x1B[0m"
 
-int test_bzero()
+int cmp_bzero(size_t i)
 {
-	char	*a;
-	char	*b;
-	int		i;
-	int		n_tests;
-
-	n_tests = 500;
-	i = n_tests;
-	a = (char *)malloc(i);
-	b = (char *)malloc(i);
-	printf("-----------BZERO----------\n");
-	while (i > 0)
-	{
-		memset(a, 'a', i);
-		memcpy(b, a, i);
-		ft_bzero(a, i);
-		bzero(b, i);
-		if (memcmp(a,b,10))
-		{
-			printf("KO\n");
-			return (1);
-		}
-		i--;
-	}
-	printf("OK on %d tests\n", n_tests);
-	free(a);
-	free(b);
-	return (0);
+	char	*expected = malloc(i);
+	char	*value = malloc(i);
+	
+	ft_bzero(value, i);
+	bzero(expected, i);
+	printf("With len %zu\n", i);
+	int assert_cmp = memcmp(expected, value, i);
+	printf("Compare: %s\n\n", assert_cmp == 0 ? "OK" : "KO");
+	free(expected);
+	free(value);
+	return assert_cmp;
 }
 
-int _test_strcat(char *as[7], char *bs[7], int i)
+int _test_bzero(size_t i)
 {
-	int len = strlen(as[i]) + strlen(bs[i]) + 1; // +1 is for terminating \0
+	if (i == 0)
+		return cmp_bzero(i);
+	return cmp_bzero(i) + _test_bzero(i / 2);
+}
+
+int test_bzero()
+{
+	size_t	n_tests = __INT_MAX__ / 8;
+
+	printf("-----------BZERO----------\n");
+	return _test_bzero(n_tests);
+}
+
+int cmp_strcat(char *s, char *to_append)
+{
+	int len = strlen(s) + strlen(to_append) + 1; // +1 is for terminating \0
 	char *clone_a = malloc(len);
 	char *clone_b = malloc(len);
 
-	char *start_a = strcpy(clone_a, as[i]);
-	char *start_b = strcpy(clone_b, as[i]);
+	char *start_a = strcpy(clone_a, s);
+	char *start_b = strcpy(clone_b, s);
 
-	char *expected = strcat(start_a, bs[i]);
-	char *value = ft_strcat(start_b, bs[i]);
+	char *expected = strcat(start_a, to_append);
+	char *value = ft_strcat(start_b, to_append);
 
-	printf("Test %d\n", i);
 	// printf("start_b: 0x%X\n  value: 0x%X\n", start_b, value);
 	// printf("ft_strcat: %s\n", value);
 	// printf("strcat:    %s\n", expected);
@@ -60,9 +58,15 @@ int _test_strcat(char *as[7], char *bs[7], int i)
 	printf("\n");
 	free(expected);
 	free(value);
+	return assert_cmp + assert_ret;
+}
+
+int _test_strcat(char *as[7], char *bs[7], int i)
+{
+	printf("Test %d\n", i);
 	if (i == 0)
-		return assert_cmp + assert_ret;
-	return assert_cmp + assert_ret + _test_strcat(as, bs, i - 1);
+		return cmp_strcat(as[i], bs[i]);
+	return cmp_strcat(as[i], bs[i]) + _test_strcat(as, bs, i - 1);
 }
 
 int test_strcat()
@@ -565,11 +569,11 @@ int main()
 
 	err = 0;
 	// err += print_partial("BZERO", test_bzero());
-	// err += print_partial("STRCAT", test_strcat());
+	err += print_partial("STRCAT", test_strcat());
 	// err += print_partial("STRLEN", test_strlen());
 	// err += print_partial("PUTS", test_puts());
 	// err += print_partial("ISALPHA", test_isalpha());
-	err += print_partial("ISDIGIT", test_isdigit());
+	// err += print_partial("ISDIGIT", test_isdigit());
 	// err += print_partial("ISALNUM", test_isalnum());
 	// err += print_partial("ISASCII", test_isascii());
 	// err += print_partial("ISPRINT", test_isprint());
