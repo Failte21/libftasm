@@ -12,7 +12,7 @@ init:
 
 ft_isalpha:
 	call _ft_islower
-	cmp al, 1			; since we know result is either 0 or one we can only compare the lowest byte
+	cmp rax, 1
 	je end
 	call _ft_isupper
 

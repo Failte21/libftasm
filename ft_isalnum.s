@@ -12,7 +12,7 @@ init:
 
 ft_isalnum:
 	call _ft_isdigit
-	cmp al, 1
+	cmp rax, 1
 	je end
 	call _ft_isalpha
 

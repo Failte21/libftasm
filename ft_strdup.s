@@ -12,20 +12,14 @@ init:
 	mov rbp, rsp
 
 ft_strdup:
-	push rdi
+	push rdi			; save pointer
 	call _ft_strlen
-	pop rdi
-	mov rsi, rdi
-	mov rdx, rax
-	mov edi, 10
-	push rsi
-	push rdx
-	sub rsp, 32 + 16
-	call _malloc
-	add rsp, 32 + 16
-	pop rdx
-	pop rsi
+	pop rsi				; get pointer back
 	mov rdi, rax
+	push rax			; size to malloc
+	call _malloc
+	pop rdx				; size to copy
+	mov rdi, rax		; freshly allocated pointer
 	call _ft_memcpy
 
 end:
