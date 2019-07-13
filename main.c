@@ -37,21 +37,59 @@ int test_bzero()
 	return (0);
 }
 
-// TODO: improve
+int _test_strcat(char *as[7], char *bs[7], int i)
+{
+	int len = strlen(as[i]) + strlen(bs[i]) + 1; // +1 is for terminating \0
+	char *clone_a = malloc(len);
+	char *clone_b = malloc(len);
+
+	char *start_a = strcpy(clone_a, as[i]);
+	char *start_b = strcpy(clone_b, as[i]);
+
+	char *expected = strcat(start_a, bs[i]);
+	char *value = ft_strcat(start_b, bs[i]);
+
+	printf("Test %d\n", i);
+	// printf("start_b: 0x%X\n  value: 0x%X\n", start_b, value);
+	// printf("ft_strcat: %s\n", value);
+	// printf("strcat:    %s\n", expected);
+	int assert_ret = value - start_b; // make sure we kept the same pointer
+	printf("Return value: %s\n", assert_ret == 0 ? "OK" : "KO");
+	int assert_cmp = strcmp(expected, value);
+	printf("Compare     : %s\n", assert_cmp == 0 ? "OK" : "KO");
+	printf("\n");
+	free(expected);
+	free(value);
+	if (i == 0)
+		return assert_cmp + assert_ret;
+	return assert_cmp + assert_ret + _test_strcat(as, bs, i - 1);
+}
+
 int test_strcat()
 {
-	char	*a;
-	char	*b;
-	int		i;
-	
-	i = 10;
-	a = (char *)malloc(i);
-	b = (char *)malloc(i);
-	memset(a, 'a', 3);
-	memset(b, 'b', 3);
-	ft_strcat(a,b);
-	printf("%s\n", a);
-	return (0);
+	printf("-----------STRLEN----------\n");
+	char	*as[7] = {
+		"Hello world!",
+		"Open the gates !!!\n",
+		"Hat er sich von 0 auf 100 in den Raum gesetzt\n",
+		"Nunc egestas faucibus sapien ut ultrices. Curabitur convallis tellus a dignissim varius. Sed ac condimentum nulla. Proin vehicula, quam ac dictum accumsan, velit elit condimentum ipsum, ut sodales nibh urna nec ex. Nam vehicula felis nulla. Praesent scelerisque ex ipsum, sit amet facilisis lorem luctus in. Duis lacus urna, ultrices vel nunc id, consectetur sodales ante.\n",
+		"Ut scelerisque, enim nec eleifend rutrum, diam augue condimentum velit, vitae consectetur risus lacus vel ex. Fusce quis felis ut dui malesuada accumsan vehicula et erat. Suspendisse feugiat id justo nec sollicitudin. Curabitur sodales nibh neque, id fringilla nulla tincidunt nec. Suspendisse vel felis eget enim bibendum ornare. Sed pulvinar est quis eros fringilla, vitae egestas leo hendrerit. Donec rutrum consequat nunc, mattis vehicula arcu molestie id. Donec rutrum velit ut rhoncus pulvinar.\n",
+		"Nam sollicitudin faucibus nulla. In hac habitasse platea dictumst. Donec at blandit tortor, vitae molestie libero. Mauris porttitor nec est nec venenatis. Nunc tortor quam, vehicula ut malesuada in, sodales vitae enim. Donec ac placerat nunc, auctor facilisis urna. Donec blandit lectus ac nunc luctus, et bibendum est aliquam. Curabitur suscipit, est euismod tristique porta, felis mauris dignissim enim, vel mattis metus lacus et erat. Curabitur laoreet dui at lorem sollicitudin, et auctor ligula dapibus. Fusce ut dui sem. Etiam vel varius arcu. Phasellus eget tincidunt quam.",
+		"Nullam fringilla, ipsum eget venenatis vulputate, quam sem venenatis urna, a vehicula turpis est non ipsum. Integer posuere elit id nibh gravida fringilla sed non urna. Vestibulum euismod dignissim purus sit amet sodales. Vivamus scelerisque sed sapien ac euismod. Quisque volutpat leo vel consectetur ornare. Donec pulvinar, elit eu pellentesque tristique, risus nisl aliquet urna, ut ultrices ex turpis et orci. Pellentesque mattis congue nulla et maximus. Nullam accumsan auctor consectetur. Nullam cursus nisi elit, consectetur convallis diam facilisis nec. Donec a massa sit amet ipsum feugiat efficitur. Sed dapibus ullamcorper dictum. Vivamus mollis convallis purus et efficitur. Nam commodo, sapien sed finibus interdum, lorem quam vulputate leo, eget sagittis leo libero eu massa. Integer volutpat, nunc sit amet condimentum pulvinar, nibh nulla luctus diam, non consectetur justo arcu id tortor. Aliquam ut tellus a neque lobortis lobortis vel et metus."
+	};
+
+	char	*bs[7] = {
+		"Nullam fringilla, ipsum eget venenatis vulputate, quam sem venenatis urna, a vehicula turpis est non ipsum. Integer posuere elit id nibh gravida fringilla sed non urna. Vestibulum euismod dignissim purus sit amet sodales. Vivamus scelerisque sed sapien ac euismod. Quisque volutpat leo vel consectetur ornare. Donec pulvinar, elit eu pellentesque tristique, risus nisl aliquet urna, ut ultrices ex turpis et orci. Pellentesque mattis congue nulla et maximus. Nullam accumsan auctor consectetur. Nullam cursus nisi elit, consectetur convallis diam facilisis nec. Donec a massa sit amet ipsum feugiat efficitur. Sed dapibus ullamcorper dictum. Vivamus mollis convallis purus et efficitur. Nam commodo, sapien sed finibus interdum, lorem quam vulputate leo, eget sagittis leo libero eu massa. Integer volutpat, nunc sit amet condimentum pulvinar, nibh nulla luctus diam, non consectetur justo arcu id tortor. Aliquam ut tellus a neque lobortis lobortis vel et metus."
+		"Nam sollicitudin faucibus nulla. In hac habitasse platea dictumst. Donec at blandit tortor, vitae molestie libero. Mauris porttitor nec est nec venenatis. Nunc tortor quam, vehicula ut malesuada in, sodales vitae enim. Donec ac placerat nunc, auctor facilisis urna. Donec blandit lectus ac nunc luctus, et bibendum est aliquam. Curabitur suscipit, est euismod tristique porta, felis mauris dignissim enim, vel mattis metus lacus et erat. Curabitur laoreet dui at lorem sollicitudin, et auctor ligula dapibus. Fusce ut dui sem. Etiam vel varius arcu. Phasellus eget tincidunt quam.",
+		"Ut scelerisque, enim nec eleifend rutrum, diam augue condimentum velit, vitae consectetur risus lacus vel ex. Fusce quis felis ut dui malesuada accumsan vehicula et erat. Suspendisse feugiat id justo nec sollicitudin. Curabitur sodales nibh neque, id fringilla nulla tincidunt nec. Suspendisse vel felis eget enim bibendum ornare. Sed pulvinar est quis eros fringilla, vitae egestas leo hendrerit. Donec rutrum consequat nunc, mattis vehicula arcu molestie id. Donec rutrum velit ut rhoncus pulvinar.\n",
+		"Nunc egestas faucibus sapien ut ultrices. Curabitur convallis tellus a dignissim varius. Sed ac condimentum nulla. Proin vehicula, quam ac dictum accumsan, velit elit condimentum ipsum, ut sodales nibh urna nec ex. Nam vehicula felis nulla. Praesent scelerisque ex ipsum, sit amet facilisis lorem luctus in. Duis lacus urna, ultrices vel nunc id, consectetur sodales ante.\n",
+		"Hat er sich von 0 auf 100 in den Raum gesetzt\n",
+		"Open the gates !!!\n",
+		"Hello world!\n",
+	};
+
+	printf(">>>> Basic tests <<<<\n");
+	return _test_strcat(as, bs, 5);
 }
 
 int _strlen(char *s)
@@ -65,6 +103,7 @@ int _strlen(char *s)
 	return a - b;
 
 }
+
 int _test_strlen(char *s[7], int i)
 {
 	if (i < 6)
@@ -522,8 +561,8 @@ int main()
 
 	err = 0;
 	// err += print_partial("BZERO", test_bzero());
-	// err += print_partial("STRCAT", test_strcat());
-	err += print_partial("STRLEN", test_strlen());
+	err += print_partial("STRCAT", test_strcat());
+	// err += print_partial("STRLEN", test_strlen());
 	// err += print_partial("PUTS", test_puts());
 	// err += print_partial("ISALPHA", test_isalpha());
 	// err += print_partial("ISDIGIT", test_isdigit());
