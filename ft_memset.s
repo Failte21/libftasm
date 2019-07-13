@@ -11,7 +11,7 @@ ft_memset:
 	push rdi				; save pointer
 	mov rax, rsi			; store byte
 	mov rcx, rdx			; store counter
-	repz stosb				; load bytes to pointer
+	rep stosb				; load bytes to pointer
 	pop rax					; get original pointer back
 
 end:
