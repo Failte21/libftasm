@@ -237,52 +237,36 @@ int test_isalnum()
 	return basic + wide;
 }
 
+int cmp_isascii(int c)
+{
+	int assert_cmp = isascii(c) - ft_isascii(c);
+	printf("0x%X: %s\n", c, assert_cmp == 0 ? "OK" : "KO");
+	return assert_cmp;
+}
+
 int _test_isascii(char *s)
 {
 	if (*s == 0)
-		return 0;
-	int ret_a = isascii(*s);
-	int ret_b = ft_isascii(*s);
-	printf("%c: isascii: %d, ft_isascii: %d\n", *s, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isascii(s + 1);
+		return cmp_isascii(*s);
+	return cmp_isascii(*s) + _test_isascii(s + 1);
 }
 
 int _test_isascii_wide(char *s)
 {
+	int wide = *s | 0x1000;
 	if (*s == 0)
-		return 0;
-	int ret_a = isascii(*s | 0x1000);
-	int ret_b = ft_isascii(*s | 0x1000);
-	
-	printf("0x%X: isascii: %d, ft_isascii: %d\n", *s | 0x1000, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isascii_wide(s + 1);
-}
-
-int _test_isascii_range(int current, int n)
-{
-	if (n == 0) {
-		return 0;
-	}
-	int ret_a = isascii(current);
-	int ret_b = ft_isascii(current);
-	
-	printf("0x%X: isascii: %d, ft_isascii: %d\n", current, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_isascii_range(current - 100, n - 1) + _test_isascii_range(current + 100, n - 1);
+		return cmp_isascii(wide);
+	return cmp_isascii(wide) + _test_isascii_wide(s + 1);
 }
 
 int test_isascii()
 {
 	printf("-----------ISASCII----------\n");
-	return 
-	_test_isascii("123... Hey U ! 456...1 more T1me !!") +
-	_test_isascii_wide("123... Hey U ! 456...1 more T1me !!") +
-	_test_isascii_range(0, 10);
+	printf(">>>> Basic tests <<<<\n");
+	int basic = _test_isascii("Hello, world!, @Yolo #AsM4Life");
+	printf("\n>>>> With wide chars <<<<\n");
+	int wide = _test_isascii_wide("Hello, world!, @Yolo #AsM4Life");
+	return basic + wide;
 }
 
 int _test_isprint_wide(char *s)
@@ -523,19 +507,19 @@ int main()
 	int	err;
 
 	err = 0;
-	err += print_partial("BZERO", test_bzero());
-	err += print_partial("STRCAT", test_strcat());
-	err += print_partial("STRLEN", test_strlen());
-	err += print_partial("PUTS", test_puts());
-	err += print_partial("ISALPHA", test_isalpha());
-	err += print_partial("ISALNUM", test_isalnum());
-	err += print_partial("ISDIGIT", test_isdigit());
-	err += print_partial("ISASCII", test_isascii());
-	err += print_partial("ISPRINT", test_isprint());
-	err += print_partial("TOUPPER", test_toupper());
-	err += print_partial("TOLOWER", test_tolower());
-	err += print_partial("MEMSET", test_memset());
-	err += print_partial("MEMCPY", test_memcpy());
-	err += print_partial("STRDUP", test_strdup());
+	// err += print_partial("BZERO", test_bzero());
+	// err += print_partial("STRCAT", test_strcat());
+	// err += print_partial("STRLEN", test_strlen());
+	// err += print_partial("PUTS", test_puts());
+	// err += print_partial("ISALPHA", test_isalpha());
+	// err += print_partial("ISALNUM", test_isalnum());
+	// err += print_partial("ISDIGIT", test_isdigit());
+	// err += print_partial("ISASCII", test_isascii());
+	// err += print_partial("ISPRINT", test_isprint());
+	// err += print_partial("TOUPPER", test_toupper());
+	// err += print_partial("TOLOWER", test_tolower());
+	// err += print_partial("MEMSET", test_memset());
+	// err += print_partial("MEMCPY", test_memcpy());
+	// err += print_partial("STRDUP", test_strdup());
 	return print_partial("OVERALL", err);
 }
