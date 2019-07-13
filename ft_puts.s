@@ -28,7 +28,7 @@ puts:
 	cmp eax, 0
 	jl end
 
-happy_ret:							; set newline and return 10
+happy_ret:							; write newline and return 10
 	lea rsi, [rel newline]
 	mov rdx, 1
 	mov eax, MACH_SYSCALL(WRITE)
