@@ -333,52 +333,36 @@ int test_toupper()
 	return basic + wide;
 }
 
-int _test_tolower_wide(char *s)
+int cmp_tolower(int c)
 {
-	if (*s == 0)
-		return 0;
-	int ret_a = tolower(*s | 0x1000);
-	int ret_b = ft_tolower(*s | 0x1000);
-	
-	printf("0x%X: tolower: %d, ft_tolower: %d\n", *s | 0x1000, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_tolower_wide(s + 1);
-}
-
-int _test_tolower_range(int current, int n)
-{
-	if (n == 0) {
-		return 0;
-	}
-	int ret_a = tolower(current);
-	int ret_b = ft_tolower(current);
-	
-	printf("0x%X: tolower: %d, ft_tolower: %d\n", current, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_tolower_range(current - 100, n - 1) + _test_tolower_range(current + 100, n - 1);
+	int assert_cmp = tolower(c) - ft_tolower(c);
+	printf("0x%X: %s\n", c, assert_cmp == 0 ? "OK" : "KO");
+	return assert_cmp;
 }
 
 int _test_tolower(char *s)
 {
 	if (*s == 0)
-		return 0;
-	int ret_a = tolower(*s);
-	int ret_b = ft_tolower(*s);
-	printf("%c: tolower: %c, ft_tolower: %c\n", *s, ret_a, ret_b);
-	if (ret_a != ret_b)
-		return 1;
-	return _test_tolower(s + 1);
+		return cmp_tolower(*s);
+	return cmp_tolower(*s) + _test_tolower(s + 1);
+}
+
+int _test_tolower_wide(char *s)
+{
+	int wide = *s | 0x1000;
+	if (*s == 0)
+		return cmp_tolower(wide);
+	return cmp_tolower(wide) + _test_tolower_wide(s + 1);
 }
 
 int test_tolower()
 {
 	printf("-----------TOLOWER----------\n");
-	return 
-	_test_tolower("123... Hey U ! 456...1 more T1me !!") +
-	_test_tolower_wide("123... Hey U ! 456...1 more T1me !!") +
-	_test_tolower_range(0, 10);
+	printf(">>>> Basic tests <<<<\n");
+	int basic = _test_tolower("Hello, world!, @Yolo #AsM4Life");
+	printf("\n>>>> With wide chars <<<<\n");
+	int wide = _test_tolower_wide("Hello, world!, @Yolo #AsM4Life");
+	return basic + wide;
 }
 
 int _cmp_memset(char *s, int c)
