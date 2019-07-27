@@ -6,6 +6,7 @@ extern _ft_strlen
 
 section .data
 	newline db 0x0a
+	null_output: db "(null)"
 
 section .text
     global _ft_puts
@@ -17,6 +18,10 @@ init:
 	mov rbp, rsp
 	mov rsi, rdi					; save pointer
 
+check:
+	cmp rdi, 0						; check if we received a null pointer
+	je null_end
+
 strlen:
 	call _ft_strlen
 	mov edx, eax
@@ -27,6 +32,14 @@ puts:
 	syscall
 	cmp eax, 0
 	jl end
+	jmp happy_ret
+
+null_end:
+	mov rdi, STDOUT					; first argument
+	lea rsi, [rel null_output]
+	mov rdx, 6						
+	mov eax, MACH_SYSCALL(WRITE)
+	syscall
 
 happy_ret:							; write newline and return 10
 	lea rsi, [rel newline]
@@ -34,6 +47,7 @@ happy_ret:							; write newline and return 10
 	mov eax, MACH_SYSCALL(WRITE)
 	syscall
 	mov eax, 10						; return value on success
+	jmp end
 
 end:
 	leave							; pop stack
