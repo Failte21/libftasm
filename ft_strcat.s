@@ -13,7 +13,7 @@ init:
 
 mv_to_end:
     cmp byte[rdi], 0		; loop until \0
-    jle strlen
+    je strlen
     inc rdi
     jmp mv_to_end
 
