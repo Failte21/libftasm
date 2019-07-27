@@ -29,5 +29,7 @@ else
 	done < $filename
 fi
 
-# rm -f expected.txt
-# rm -f value.txt
+rm -f expected.txt
+rm -f value.txt
+rm -f ft_puts
+rm -f puts

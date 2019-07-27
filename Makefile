@@ -30,6 +30,10 @@ $(NAME): $(OBJS)
 %.o: %.s
 	$(AS) -f macho64 $^ -o $@
 
+test:
+	@make
+	sh test.sh
+
 clean:
 	rm -f $(OBJS)
 
