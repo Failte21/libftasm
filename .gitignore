@@ -1,14 +1,8 @@
-a.out*
 .vscode
 *.o
 *.txt
 *.dSYM/
 libfts.a
-syscall.h
 ft_cat
 ft_puts
 puts
-liz_main
-ft_cat.dSYM/
-ft_cat.txt
-cat.txt

@@ -5,13 +5,8 @@ WHITE='\033[1;37m'
 
 echo '---------------- LSIMON MAIN --------------------'
 gcc main.c -g libfts.a -o test_main
-./test_main
+./test_main $1
 rm -f test_main
-
-echo '---------------- EKELEN MAIN --------------------'
-gcc liz_main.c -g libfts.a -o liz_main
-./liz_main
-rm -f liz_main
 
 echo '---------------- FT_CAT TEST --------------------'
 sh test_cat.sh .
