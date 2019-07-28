@@ -1,7 +1,7 @@
 %define MACH_SYSCALL(nb)	0x2000000 | nb
 %define READ 3
 %define WRITE 4
-%define BUF_SIZE 1
+%define BUF_SIZE 256
 %define STDOUT 1
 
 extern _ft_puts
